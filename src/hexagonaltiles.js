@@ -1,14 +1,35 @@
 function HexagonalTiles(size){
   
   var sqrt3 = Math.sqrt(3);
-  var triangleWidth = sqrt3 * 2/3;
+  var triangleWidth = Math.sqrt(4/3);
   var triangleHeight = 1;
+  var angleIncrement = Math.PI/3;
+  var vertexPositions;
+  var _size = size;
+ 
+  var init = function() {
+    vertexPositions = [];
+    var angle = 0;
+    for(var n=0;n<6;n++){
+        angle+=angleIncrement;
+        
+        vertexPositions.push( { 
+          x : _size*triangleWidth*Math.cos(angle), 
+          y : _size*triangleWidth*Math.sin(angle)
+        } );
+      }
+  };
+      
+  this.resize = function(size){
+    _size = size;
+    init();
+  }
   
   this.positionToHexagonCoord = function(x,y){
     // a is the horizontal triangle coordinate
-    var a = Math.floor( y / size );
-    var b = Math.floor( ( y - sqrt3*x ) / ( 2 * size ) );
-    var c = Math.floor( ( y + sqrt3*x ) / ( 2 * size ) );
+    var a = Math.floor( y / _size );
+    var b = Math.floor( ( y - sqrt3*x ) / ( 2 * _size ) );
+    var c = Math.floor( ( y + sqrt3*x ) / ( 2 * _size ) );
    
     //find the horizontal triangle coordinate 
     var d = ( 2*c - 2*b ) / (2);
@@ -39,8 +60,8 @@ function HexagonalTiles(size){
     
   this.hexagonCoordToPosition = function(i,j){
     return { 
-      x : size * sqrt3 * i + ( size * sqrt3 * 1/3 ), 
-      y : 2 * size * (j+0.5*(i%2)) + size
+      x : _size * sqrt3 * i + ( _size * 0.5 * triangleWidth ), 
+      y : 2 * _size * (j+0.5*(i%2)) + _size
     };
   };
     
@@ -49,27 +70,25 @@ function HexagonalTiles(size){
     var positions = [];
     var angle=0;
     
-    for(var n=0;n<6;n++){
-      angle+=Math.PI/3;
-      positions.push( { 
-        x : m.x+size*2/3*sqrt3*Math.cos(angle), 
-        y : m.y+size*2/3*sqrt3*Math.sin(angle)
-      } );
-    }
+    positions = vertexPositions.map(function(vertex){
+      return { x : vertex.x + m.x, y : vertex.y + m.y };
+    });
    
     return positions;
   };
   
   this.lineA = function(x,n){ 
-     var C = n * size;
+     var C = n * _size;
      return C ;
   };
   this.lineB = function(x,n){ 
-     var C = n * size;
+     var C = n * _size;
      return sqrt3*x + 2*C; 
   };
   this.lineC = function(x,n){
-     var C = n * size;
+     var C = n * _size;
      return -sqrt3*x + 2*C; 
   };
+  
+  init();
 }
