@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<!--
+
+  Created using /
+  Source can be edited via /usapay/14/edit
+
+-->
+<head>
+<script src="../src/hexagonaltiles.js"></script>
+<meta charset=utf-8 />
+  <title>Draw / Save</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: auto; }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+  <script>
+    // setup
+    var c = document.getElementsByTagName('canvas')[0],
+    ctx = c.getContext('2d');
+
+    c.height = window.innerHeight - 20;
+    c.width = window.innerWidth - 20;
+    
+    c.onclick = function () {
+      window.open(c.toDataURL('image/png'), '');
+    };
+   
+	c.height = c.width = 500;
+	ctx.translate(0,0);
+	ctx.lineWidth = 1;
+
+var pos;
+
+function blue()
+{
+  ctx.strokeStyle = 'rgb(200,200,200)';
+}
+
+function red()
+{
+  ctx.strokeStyle = 'rgb(255,0,0)';
+}
+
+blue();
+
+var tiles = new HexagonalTiles(25);
+
+console.log( tiles );
+
+function drawHexagon(i,j,colour){
+  ctx.fillStyle = colour;  
+  ctx.beginPath();
+  var vertices = tiles.hexagonCoordToVertices(i,j);
+  var vertex = vertices.shift();
+  ctx.moveTo(vertex.x,vertex.y);
+  
+  while(vertices.length>0){
+    vertex = vertices.shift();
+    ctx.lineTo(vertex.x,vertex.y);
+  }
+  
+  
+  ctx.fill();
+    
+}
+
+setInterval(function(){
+  ctx.fillStyle = 'rgba(255,255,255,0.1)';
+  ctx.fillRect( 0, 0, 500, 500);
+  if( pos ) draw( pos.x, pos.y );
+},60);
+
+function draw(mousex,mousey){
+  var size = 50;
+  
+  //ctx.clearRect(0,0,500,500);
+
+  hex = tiles.positionToHexagonCoord(mousex,mousey);
+  
+  var a = hex.a;
+  var b = hex.b;
+  var c = hex.c;
+  
+  console.log(hex.i,hex.j);
+  drawHexagon(hex.i,hex.j,"rgb(220,20,20)");
+  
+  var lines = [tiles.lineA,tiles.lineB,tiles.lineC];
+  var currentLines = [a,b,c];
+  for(var l=0;l<lines.length;l++){
+    var y = lines[l];
+    var current = currentLines[l];
+    for(var n=-16;n<28;n+=1) {
+      var startX = 0;
+      var endX = 500;
+      if(n==current) red();
+      ctx.beginPath();
+      ctx.moveTo(startX, y(startX,n));
+      ctx.lineTo(endX, y(endX,n));
+      ctx.closePath();
+      ctx.stroke();
+      if(n==current) blue();
+    }
+  }
+
+}
+
+function getPosition(event,canvas)
+{
+  var x = event.x;
+  var y = event.y;
+
+  x -= canvas.offsetLeft;
+  y -= canvas.offsetTop;
+
+  return {x:x,y:y};
+}
+
+c.onmousemove = function(event){
+  pos = getPosition(event,c);
+};
+
+c.onmouseout = function(event){
+  pos = null;
+}
+</script>
+</body>
+</html>
