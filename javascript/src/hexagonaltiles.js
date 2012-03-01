@@ -1,8 +1,7 @@
 function HexagonalTiles(size){
   
   var sqrt3 = Math.sqrt(3);
-  var triangleWidth = Math.sqrt(4/3);
-  var triangleHeight = 1;
+  var triangleWidth, triangleHeight;
   var angleIncrement = Math.PI/3;
   var vertexPositions;
   var _size = size;
@@ -10,12 +9,16 @@ function HexagonalTiles(size){
   var init = function() {
     vertexPositions = [];
     var angle = 0;
+    
+    triangleWidth = _size*Math.sqrt(4/3);
+    triangleHeight = _size;
+    
     for(var n=0;n<6;n++){
         angle+=angleIncrement;
         
         vertexPositions.push( { 
-          x : _size*triangleWidth*Math.cos(angle), 
-          y : _size*triangleWidth*Math.sin(angle)
+          x : triangleWidth*Math.cos(angle), 
+          y : triangleWidth*Math.sin(angle)
         } );
       }
   };
@@ -60,8 +63,8 @@ function HexagonalTiles(size){
     
   this.hexagonCoordToPosition = function(i,j){
     return { 
-      x : _size * sqrt3 * i + ( _size * 0.5 * triangleWidth ), 
-      y : 2 * _size * (j+0.5*(i%2)) + _size
+      x : _size * sqrt3 * i + ( 0.5 * triangleWidth ), 
+      y : 2 * triangleHeight * (j+0.5*(i%2)) + triangleHeight
     };
   };
     
@@ -78,15 +81,15 @@ function HexagonalTiles(size){
   };
   
   this.lineA = function(x,n){ 
-     var C = n * _size;
+     var C = n * triangleHeight;
      return C ;
   };
   this.lineB = function(x,n){ 
-     var C = n * _size;
+     var C = n * triangleHeight;
      return sqrt3*x + 2*C; 
   };
   this.lineC = function(x,n){
-     var C = n * _size;
+     var C = n * triangleHeight;
      return -sqrt3*x + 2*C; 
   };
   
