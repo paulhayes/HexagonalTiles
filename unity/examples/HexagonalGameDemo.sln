@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+
+Project("{C8B8467B-E2B1-B836-DE1D-75372AEFD2C6}") = "HexagonalGameDemo", "Assembly-UnityScript.unityproj", "{EDB2AB56-3DB2-8231-5E43-CE0765D7F1F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDB2AB56-3DB2-8231-5E43-CE0765D7F1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB2AB56-3DB2-8231-5E43-CE0765D7F1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB2AB56-3DB2-8231-5E43-CE0765D7F1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB2AB56-3DB2-8231-5E43-CE0765D7F1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	
+EndGlobal

@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Main.js">
+    <Files>
+      <File FileName="Assets/Scripts/hexagonaltiles.js" Line="102" Column="1" />
+      <File FileName="Assets/Scripts/Main.js" Line="76" Column="40" />
+      <File FileName="Assets/Scripts/HexagonalTiles.js" Line="66" Column="11" />
+      <File FileName="Assets/Scripts/EaseToPosition.js" Line="12" Column="130" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
