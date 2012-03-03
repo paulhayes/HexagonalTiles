@@ -19,8 +19,9 @@
   <canvas></canvas>
   <script>
     // setup
-    var c = document.getElementsByTagName('canvas')[0],
-    ctx = c.getContext('2d');
+    var pos,
+        c = document.getElementsByTagName('canvas')[0],
+        ctx = c.getContext('2d');
 
     c.height = window.innerHeight - 20;
     c.width = window.innerWidth - 20;
@@ -33,7 +34,24 @@
 	ctx.translate(0,0);
 	ctx.lineWidth = 1;
 
-var pos;
+function getPosition(event,canvas)
+{
+  var x = event.x,
+      y = event.y;
+
+  x -= canvas.offsetLeft;
+  y -= canvas.offsetTop;
+
+  return {x:x,y:y};
+}
+
+c.onmousemove = function(event){
+  pos = getPosition(event,c);
+};
+
+c.onmouseout = function(event){
+  pos = null;
+}
 
 function blue()
 {
@@ -49,8 +67,6 @@ blue();
 
 var tiles = new HexagonalTiles(25);
 
-console.log( tiles );
-
 function drawHexagon(i,j,colour){
   ctx.fillStyle = colour;  
   ctx.beginPath();
@@ -61,11 +77,20 @@ function drawHexagon(i,j,colour){
   while(vertices.length>0){
     vertex = vertices.shift();
     ctx.lineTo(vertex.x,vertex.y);
-  }
-  
+  }  
   
   ctx.fill();
     
+}
+
+function draw(mousex,mousey){
+	var hex = tiles.positionToHexagonCoord(mousex,mousey),
+        neighboors = tiles.hexagonCoordNeighboors(hex.i,hex.j);
+      
+	drawHexagon(hex.i,hex.j,"rgba(255,0,0,0.3)");
+	for(var i=0; i<neighboors.length ; i++ ){
+		drawHexagon(neighboors[i].i,neighboors[i].j,"rgba(255,0,0,0.02)");
+	}
 }
 
 setInterval(function(){
@@ -74,36 +99,7 @@ setInterval(function(){
   if( pos ) draw( pos.x, pos.y );
 },60);
 
-function draw(mousex,mousey){
-  hex = tiles.positionToHexagonCoord(mousex,mousey);
-  
-  var a = hex.a;
-  var b = hex.b;
-  var c = hex.c;
-  
-  console.log(hex.i,hex.j);
-  drawHexagon(hex.i,hex.j,"rgb(220,20,20)");
 
-}
-
-function getPosition(event,canvas)
-{
-  var x = event.x;
-  var y = event.y;
-
-  x -= canvas.offsetLeft;
-  y -= canvas.offsetTop;
-
-  return {x:x,y:y};
-}
-
-c.onmousemove = function(event){
-  pos = getPosition(event,c);
-};
-
-c.onmouseout = function(event){
-  pos = null;
-}
 </script>
 </body>
 </html>

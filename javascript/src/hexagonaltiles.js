@@ -1,19 +1,25 @@
 function HexagonalTiles(size){
   
-  var sqrt3 = Math.sqrt(3);
-  var triangleWidth, triangleHeight;
-  var angleIncrement = Math.PI/3;
-  var vertexPositions;
-  var _size = size;
+var sqrt3 = Math.sqrt(3),
+	triangleWidth, triangleHeight,
+	hexagonWidth, hexagonHeight,
+	angleIncrement = Math.PI/3,
+	vertexPositions,
+	_size = size;
  
-  var init = function() {
-    vertexPositions = [];
-    var angle = 0;
+var init = function() {
+	var angle = 0,
+		n;
+
+	vertexPositions = [];
     
-    triangleWidth = _size*Math.sqrt(4/3);
-    triangleHeight = _size;
+	triangleWidth = _size;
+	triangleHeight = 0.5 * sqrt3 * _size;
     
-    for(var n=0;n<6;n++){
+	hexagonWidth = 1.5 * triangleWidth;
+    hexagonHeight = 2 * triangleHeight;
+    
+    for(n=0;n<6;n++){
         angle+=angleIncrement;
         
         vertexPositions.push( { 
@@ -22,17 +28,22 @@ function HexagonalTiles(size){
         } );
       }
   };
-      
-  this.resize = function(size){
-    _size = size;
+  
+this.resizeHexagonWidth = function(size){
+	_size = size / 1.5;
+	init();
+};
+  
+this.resize = function(size){
+	_size = size;
     init();
-  }
+};
   
   this.positionToHexagonCoord = function(x,y){
     // a is the horizontal triangle coordinate
-    var a = Math.floor( y / _size );
-    var b = Math.floor( ( y - sqrt3*x ) / ( 2 * _size ) );
-    var c = Math.floor( ( y + sqrt3*x ) / ( 2 * _size ) );
+    var a = Math.floor( y / triangleHeight );
+    var b = Math.floor( ( y - sqrt3*x ) / ( 2 * triangleHeight ) );
+    var c = Math.floor( ( y + sqrt3*x ) / ( 2 * triangleHeight ) );
    
     //find the horizontal triangle coordinate 
     var d = ( 2*c - 2*b ) / (2);
@@ -63,19 +74,46 @@ function HexagonalTiles(size){
     
   this.hexagonCoordToPosition = function(i,j){
     return { 
-      x : _size * sqrt3 * i + ( 0.5 * triangleWidth ), 
-      y : 2 * triangleHeight * (j+0.5*(i%2)) + triangleHeight
+      x : triangleWidth * ( 1.5 * i + 0.5), 
+      y : triangleHeight * ( 2 * (j+0.5*(i%2)) + 1 )
     };
   };
+
+  this.hexagonCoordToBoundingBox = function(i,j){
+	var hh = hexagonHeight * 0.5,
+		hw = hexagonWidth * 0.5,
+		box = hexagonCoordToPosition(i,j);
+    
+    box.top = box.y - hh;
+	box.left = box.x - hw;
+    box.bottom = box.y + hh;
+    box.right = box.x + hw;
+    box.width = hexagonWidth;
+    box.height = hexagonHeight;
+    
+    return box;
+  };
+
     
   this.hexagonCoordToVertices = function(i,j){
     var m = this.hexagonCoordToPosition(i,j);
-    var positions = [];
-    var angle=0;
+    var positions;
     
+    /*
     positions = vertexPositions.map(function(vertex){
       return { x : vertex.x + m.x, y : vertex.y + m.y };
     });
+    */
+    
+    //unrolled for speed and to remove map function
+    positions = [
+		{ x : vertexPositions[0].x + m.x, y : vertexPositions[0].y + m.y },
+		{ x : vertexPositions[1].x + m.x, y : vertexPositions[1].y + m.y },
+		{ x : vertexPositions[2].x + m.x, y : vertexPositions[2].y + m.y },
+		{ x : vertexPositions[3].x + m.x, y : vertexPositions[3].y + m.y },
+		{ x : vertexPositions[4].x + m.x, y : vertexPositions[4].y + m.y },
+		{ x : vertexPositions[5].x + m.x, y : vertexPositions[5].y + m.y }
+    ];
    
     return positions;
   };
