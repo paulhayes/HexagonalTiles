@@ -25,7 +25,7 @@ package
 			triangleWidth = _size;
 			triangleHeight = 0.5 * sqrt3 * _size;
 			
-			hexagonWidth = 1.5 * triangleWidth;
+			hexagonWidth = 2 * triangleWidth;
 			hexagonHeight = 2 * triangleHeight;
 			
 			for(n=0;n<6;n++){
