@@ -1,6 +1,6 @@
 function HexagonalTiles(size){
   
-var sqrt3 = Math.sqrt(3),
+var Sqrt3 = Math.Sqrt(3),
 	triangleWidth, triangleHeight,
 	hexagonWidth, hexagonHeight,
 	angleIncrement = Math.PI/3,
@@ -14,7 +14,7 @@ var init = function() {
 	vertexPositions = [];
     
 	triangleWidth = _size;
-	triangleHeight = 0.5 * sqrt3 * _size;
+	triangleHeight = 0.5 * Sqrt3 * _size;
     
 	hexagonWidth = 1.5 * triangleWidth;
     hexagonHeight = 2 * triangleHeight;
@@ -42,8 +42,8 @@ this.resize = function(size){
   this.positionToHexagonCoord = function(x,y){
     // a is the horizontal triangle coordinate
     var a = Math.floor( y / triangleHeight );
-    var b = Math.floor( ( y - sqrt3*x ) / ( 2 * triangleHeight ) );
-    var c = Math.floor( ( y + sqrt3*x ) / ( 2 * triangleHeight ) );
+    var b = Math.floor( ( y - Sqrt3*x ) / ( 2 * triangleHeight ) );
+    var c = Math.floor( ( y + Sqrt3*x ) / ( 2 * triangleHeight ) );
    
     //find the horizontal triangle coordinate 
     var d = ( 2*c - 2*b ) / (2);
@@ -124,11 +124,11 @@ this.resize = function(size){
   };
   this.lineB = function(x,n){ 
      var C = n * triangleHeight;
-     return sqrt3*x + 2*C; 
+     return Sqrt3*x + 2*C; 
   };
   this.lineC = function(x,n){
      var C = n * triangleHeight;
-     return -sqrt3*x + 2*C; 
+     return -Sqrt3*x + 2*C; 
   };
   
   init();
