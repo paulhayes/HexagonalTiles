@@ -12,6 +12,7 @@ package
 		protected var rows : int = 10;
 		
 		/**
+		 * IMPORTANT INFORMATION
 		 * Please make sure you add ../src ( i.e actionscript/src ) as a source directory to the project
 		 * 
 		 */
