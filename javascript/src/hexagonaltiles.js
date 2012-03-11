@@ -30,7 +30,7 @@ var init = function() {
   };
   
 this.resizeHexagonWidth = function(size){
-	_size = size / 1.5;
+	_size = size / 2;
 	init();
 };
   

@@ -39,7 +39,7 @@ package
 		};
 		
 		public function resizeHexagonWidth(size:Number):void{
-			_size = size / 1.5;
+			_size = size / 2;
 			init();
 		};
 	  

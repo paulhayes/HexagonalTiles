@@ -36,7 +36,7 @@ class HexagonalTiles {
 	};
 	
 	public function resizeHexagonWidth(size){
-		_size = size / 1.5;
+		_size = size / 2;
 		init();
 	};
   
