@@ -1,6 +1,6 @@
 function HexagonalTiles(size){
   
-var Sqrt3 = Math.Sqrt(3),
+var Sqrt3 = Math.sqrt(3),
 	triangleWidth, triangleHeight,
 	hexagonWidth, hexagonHeight,
 	angleIncrement = Math.PI/3,
