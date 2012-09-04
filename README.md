@@ -1,4 +1,4 @@
-Hexagonal Tiles - A utility for using tessallating hexagons
+Hexagonal Tiles - A general purpose utility for using tessallating hexagons
 ==================================================
 
 author @paul_hayes
